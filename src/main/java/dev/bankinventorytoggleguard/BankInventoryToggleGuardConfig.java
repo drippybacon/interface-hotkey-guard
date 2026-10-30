@@ -17,22 +17,10 @@ public interface BankInventoryToggleGuardConfig extends Config
 
 	@ConfigSection(
 		name = "Hotkeys",
-		description = "Choose which keys to suppress.",
+		description = "Choose which F-keys to suppress.",
 		position = 1
 	)
 	String hotkeysSection = "hotkeys";
-
-	@ConfigItem(
-		keyName = "suppressEscape",
-		name = "Suppress Esc",
-		description = "Suppress Esc while a protected interface is open.",
-		section = hotkeysSection,
-		position = 12
-	)
-	default boolean suppressEscape()
-	{
-		return false;
-	}
 
 	@ConfigItem(
 		keyName = "protectBank",
