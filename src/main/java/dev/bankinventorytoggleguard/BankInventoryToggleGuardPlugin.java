@@ -47,7 +47,7 @@ public class BankInventoryToggleGuardPlugin extends Plugin
 		@Override
 		public void keyPressed(KeyEvent event)
 		{
-			if (isProtectedContext() && isSelectedFunctionKey(event.getKeyCode()))
+			if (isProtectedContext() && isSelectedHotkey(event.getKeyCode()))
 			{
 				event.consume();
 			}
@@ -130,10 +130,12 @@ public class BankInventoryToggleGuardPlugin extends Plugin
 		}
 	}
 
-	private boolean isSelectedFunctionKey(int keyCode)
+	private boolean isSelectedHotkey(int keyCode)
 	{
 		switch (keyCode)
 		{
+			case KeyEvent.VK_ESCAPE:
+				return config.suppressEscape();
 			case KeyEvent.VK_F1:
 				return config.suppressF1();
 			case KeyEvent.VK_F2:
@@ -170,4 +172,3 @@ public class BankInventoryToggleGuardPlugin extends Plugin
 			|| (config.protectSettings() && settingsOpen);
 	}
 }
-
