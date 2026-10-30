@@ -17,8 +17,7 @@ import net.runelite.client.plugins.PluginDescriptor;
 
 @PluginDescriptor(
 	name = "Interface Hotkey Guard",
-	description = "Suppresses selected hotkeys while certain interfaces are open",
-	enabledByDefault = false
+	description = "Suppresses selected hotkeys while certain interfaces are open"
 )
 public class InterfaceHotkeyGuardPlugin extends Plugin
 {
