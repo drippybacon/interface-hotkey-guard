@@ -63,7 +63,7 @@ public interface InterfaceHotkeyGuardConfig extends Config
 	@ConfigItem(
 		keyName = "suppressF1",
 		name = "Suppress F1",
-		description = "Suppress F1 while a protected interface is open.",
+		description = "Suppress unmodified F1 while a protected interface is open.",
 		section = hotkeysSection,
 		position = 0
 	)
@@ -75,7 +75,7 @@ public interface InterfaceHotkeyGuardConfig extends Config
 	@ConfigItem(
 		keyName = "suppressF2",
 		name = "Suppress F2",
-		description = "Suppress F2 while a protected interface is open.",
+		description = "Suppress unmodified F2 while a protected interface is open.",
 		section = hotkeysSection,
 		position = 1
 	)
@@ -87,7 +87,7 @@ public interface InterfaceHotkeyGuardConfig extends Config
 	@ConfigItem(
 		keyName = "suppressF3",
 		name = "Suppress F3",
-		description = "Suppress F3 while a protected interface is open.",
+		description = "Suppress unmodified F3 while a protected interface is open.",
 		section = hotkeysSection,
 		position = 2
 	)
@@ -99,7 +99,7 @@ public interface InterfaceHotkeyGuardConfig extends Config
 	@ConfigItem(
 		keyName = "suppressF4",
 		name = "Suppress F4",
-		description = "Suppress F4 while a protected interface is open.",
+		description = "Suppress unmodified F4 while a protected interface is open.",
 		section = hotkeysSection,
 		position = 3
 	)
@@ -111,7 +111,7 @@ public interface InterfaceHotkeyGuardConfig extends Config
 	@ConfigItem(
 		keyName = "suppressF5",
 		name = "Suppress F5",
-		description = "Suppress F5 while a protected interface is open.",
+		description = "Suppress unmodified F5 while a protected interface is open.",
 		section = hotkeysSection,
 		position = 4
 	)
@@ -123,7 +123,7 @@ public interface InterfaceHotkeyGuardConfig extends Config
 	@ConfigItem(
 		keyName = "suppressF6",
 		name = "Suppress F6",
-		description = "Suppress F6 while a protected interface is open.",
+		description = "Suppress unmodified F6 while a protected interface is open.",
 		section = hotkeysSection,
 		position = 5
 	)
@@ -135,7 +135,7 @@ public interface InterfaceHotkeyGuardConfig extends Config
 	@ConfigItem(
 		keyName = "suppressF7",
 		name = "Suppress F7",
-		description = "Suppress F7 while a protected interface is open.",
+		description = "Suppress unmodified F7 while a protected interface is open.",
 		section = hotkeysSection,
 		position = 6
 	)
@@ -147,7 +147,7 @@ public interface InterfaceHotkeyGuardConfig extends Config
 	@ConfigItem(
 		keyName = "suppressF8",
 		name = "Suppress F8",
-		description = "Suppress F8 while a protected interface is open.",
+		description = "Suppress unmodified F8 while a protected interface is open.",
 		section = hotkeysSection,
 		position = 7
 	)
@@ -159,7 +159,7 @@ public interface InterfaceHotkeyGuardConfig extends Config
 	@ConfigItem(
 		keyName = "suppressF9",
 		name = "Suppress F9",
-		description = "Suppress F9 while a protected interface is open.",
+		description = "Suppress unmodified F9 while a protected interface is open.",
 		section = hotkeysSection,
 		position = 8
 	)
@@ -171,7 +171,7 @@ public interface InterfaceHotkeyGuardConfig extends Config
 	@ConfigItem(
 		keyName = "suppressF10",
 		name = "Suppress F10",
-		description = "Suppress F10 while a protected interface is open.",
+		description = "Suppress unmodified F10 while a protected interface is open.",
 		section = hotkeysSection,
 		position = 9
 	)
@@ -183,7 +183,7 @@ public interface InterfaceHotkeyGuardConfig extends Config
 	@ConfigItem(
 		keyName = "suppressF11",
 		name = "Suppress F11",
-		description = "Suppress F11 while a protected interface is open.",
+		description = "Suppress unmodified F11 while a protected interface is open.",
 		section = hotkeysSection,
 		position = 10
 	)
@@ -195,7 +195,7 @@ public interface InterfaceHotkeyGuardConfig extends Config
 	@ConfigItem(
 		keyName = "suppressF12",
 		name = "Suppress F12",
-		description = "Suppress F12 while a protected interface is open.",
+		description = "Suppress unmodified F12 while a protected interface is open.",
 		section = hotkeysSection,
 		position = 11
 	)

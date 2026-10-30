@@ -22,9 +22,6 @@ import net.runelite.client.plugins.PluginDescriptor;
 )
 public class InterfaceHotkeyGuardPlugin extends Plugin
 {
-	private static final int BANK_GROUP_ID = InterfaceID.BANKMAIN;
-	private static final int COLLECTION_LOG_GROUP_ID = InterfaceID.COLLECTION;
-	private static final int SETTINGS_GROUP_ID = InterfaceID.SETTINGS;
 	// Migrate saved preferences from the plugin's original config group.
 	private static final String LEGACY_CONFIG_GROUP = "bankinventorytoggleguard";
 	private static final String[] CONFIG_KEYS = {
@@ -49,16 +46,16 @@ public class InterfaceHotkeyGuardPlugin extends Plugin
 	@Inject
 	private InterfaceHotkeyGuardConfig config;
 
-	private volatile boolean bankOpen;
-	private volatile boolean collectionLogOpen;
-	private volatile boolean settingsOpen;
+	private final InterfaceState interfaceState = new InterfaceState();
 
 	private final KeyListener inputListener = new KeyListener()
 	{
 		@Override
 		public void keyPressed(KeyEvent event)
 		{
-			if (isProtectedContext() && isSelectedFunctionKey(event.getKeyCode()))
+			if (interfaceState.shouldSuppress(
+				config.protectBank(), config.protectCollectionLog(), config.protectSettings())
+				&& FunctionKeyFilter.shouldSuppress(event.getKeyCode(), event.getModifiersEx(), config))
 			{
 				event.consume();
 			}
@@ -90,12 +87,14 @@ public class InterfaceHotkeyGuardPlugin extends Plugin
 	protected void startUp()
 	{
 		migrateConfiguration();
+		interfaceState.beginInitialization();
 		keyManager.registerKeyListener(inputListener);
 		clientThread.invokeLater(() ->
 		{
-			bankOpen = client.getWidget(InterfaceID.Bankmain.UNIVERSE) != null;
-			collectionLogOpen = client.getWidget(InterfaceID.Collection.FRAME) != null;
-			settingsOpen = client.getWidget(InterfaceID.Settings.UNIVERSE) != null;
+			interfaceState.initialize(
+				client.getWidget(InterfaceID.Bankmain.UNIVERSE) != null,
+				client.getWidget(InterfaceID.Collection.FRAME) != null,
+				client.getWidget(InterfaceID.Settings.UNIVERSE) != null);
 		});
 	}
 
@@ -103,83 +102,19 @@ public class InterfaceHotkeyGuardPlugin extends Plugin
 	protected void shutDown()
 	{
 		keyManager.unregisterKeyListener(inputListener);
-		bankOpen = false;
-		collectionLogOpen = false;
-		settingsOpen = false;
+		interfaceState.reset();
 	}
 
 	@Subscribe
 	public void onWidgetLoaded(WidgetLoaded event)
 	{
-		if (event.getGroupId() == BANK_GROUP_ID)
-		{
-			bankOpen = true;
-		}
-		else if (event.getGroupId() == COLLECTION_LOG_GROUP_ID)
-		{
-			collectionLogOpen = true;
-		}
-		else if (event.getGroupId() == SETTINGS_GROUP_ID)
-		{
-			settingsOpen = true;
-		}
+		interfaceState.onWidgetLoaded(event.getGroupId());
 	}
 
 	@Subscribe
 	public void onWidgetClosed(WidgetClosed event)
 	{
-		if (event.getGroupId() == BANK_GROUP_ID)
-		{
-			bankOpen = false;
-		}
-		else if (event.getGroupId() == COLLECTION_LOG_GROUP_ID)
-		{
-			collectionLogOpen = false;
-		}
-		else if (event.getGroupId() == SETTINGS_GROUP_ID)
-		{
-			settingsOpen = false;
-		}
-	}
-
-	private boolean isSelectedFunctionKey(int keyCode)
-	{
-		switch (keyCode)
-		{
-			case KeyEvent.VK_F1:
-				return config.suppressF1();
-			case KeyEvent.VK_F2:
-				return config.suppressF2();
-			case KeyEvent.VK_F3:
-				return config.suppressF3();
-			case KeyEvent.VK_F4:
-				return config.suppressF4();
-			case KeyEvent.VK_F5:
-				return config.suppressF5();
-			case KeyEvent.VK_F6:
-				return config.suppressF6();
-			case KeyEvent.VK_F7:
-				return config.suppressF7();
-			case KeyEvent.VK_F8:
-				return config.suppressF8();
-			case KeyEvent.VK_F9:
-				return config.suppressF9();
-			case KeyEvent.VK_F10:
-				return config.suppressF10();
-			case KeyEvent.VK_F11:
-				return config.suppressF11();
-			case KeyEvent.VK_F12:
-				return config.suppressF12();
-			default:
-				return false;
-		}
-	}
-
-	private boolean isProtectedContext()
-	{
-		return (config.protectBank() && bankOpen)
-			|| (config.protectCollectionLog() && collectionLogOpen)
-			|| (config.protectSettings() && settingsOpen);
+		interfaceState.onWidgetClosed(event.getGroupId());
 	}
 
 	private void migrateConfiguration()
