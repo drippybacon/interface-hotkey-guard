@@ -71,4 +71,15 @@ public class InterfaceStateTest
 		assertTrue(state.shouldSuppress(false, true, false));
 		assertTrue(state.shouldSuppress(false, false, true));
 	}
+
+	@Test
+	public void resetClosesAllInterfacesAndDisablesSuppression()
+	{
+		InterfaceState state = new InterfaceState();
+		state.initialize(true, true, true);
+
+		state.reset();
+
+		assertFalse(state.shouldSuppress(true, true, true));
+	}
 }

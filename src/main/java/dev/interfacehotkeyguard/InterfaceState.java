@@ -31,7 +31,7 @@ final class InterfaceState
 
 	void reset()
 	{
-		beginInitialization();
+		initialize(false, false, false);
 	}
 
 	void onWidgetLoaded(int groupId)
