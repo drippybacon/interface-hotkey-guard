@@ -21,7 +21,7 @@ dependencies {
 	testImplementation group: 'net.runelite', name: 'jshell', version: runeLiteVersion
 }
 
-group = 'dev.bankinventorytoggleguard'
+group = 'dev.interfacehotkeyguard'
 version = '1.5.1'
 
 tasks.withType(JavaCompile).configureEach {
@@ -35,7 +35,7 @@ tasks.named('jar') {
 
 tasks.register('run', JavaExec) {
 	classpath = sourceSets.test.runtimeClasspath
-	mainClass = 'dev.bankinventorytoggleguard.BankInventoryToggleGuardDev'
+	mainClass = 'dev.interfacehotkeyguard.InterfaceHotkeyGuardDev'
 	jvmArgs '-ea'
 	args '--developer-mode'
 }

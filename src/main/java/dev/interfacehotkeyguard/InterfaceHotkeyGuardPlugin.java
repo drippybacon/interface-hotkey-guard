@@ -1,4 +1,4 @@
-package dev.bankinventorytoggleguard;
+package dev.interfacehotkeyguard;
 
 import com.google.inject.Provides;
 import java.awt.event.KeyEvent;
@@ -20,11 +20,19 @@ import net.runelite.client.plugins.PluginDescriptor;
 	description = "Suppresses selected hotkeys while certain interfaces are open",
 	enabledByDefault = false
 )
-public class BankInventoryToggleGuardPlugin extends Plugin
+public class InterfaceHotkeyGuardPlugin extends Plugin
 {
 	private static final int BANK_GROUP_ID = InterfaceID.BANKMAIN;
 	private static final int COLLECTION_LOG_GROUP_ID = InterfaceID.COLLECTION;
 	private static final int SETTINGS_GROUP_ID = InterfaceID.SETTINGS;
+	// Migrate saved preferences from the plugin's original config group.
+	private static final String LEGACY_CONFIG_GROUP = "bankinventorytoggleguard";
+	private static final String[] CONFIG_KEYS = {
+		"protectBank", "protectCollectionLog", "protectSettings",
+		"suppressF1", "suppressF2", "suppressF3", "suppressF4",
+		"suppressF5", "suppressF6", "suppressF7", "suppressF8",
+		"suppressF9", "suppressF10", "suppressF11", "suppressF12"
+	};
 
 	@Inject
 	private Client client;
@@ -36,7 +44,10 @@ public class BankInventoryToggleGuardPlugin extends Plugin
 	private KeyManager keyManager;
 
 	@Inject
-	private BankInventoryToggleGuardConfig config;
+	private ConfigManager configManager;
+
+	@Inject
+	private InterfaceHotkeyGuardConfig config;
 
 	private volatile boolean bankOpen;
 	private volatile boolean collectionLogOpen;
@@ -70,14 +81,15 @@ public class BankInventoryToggleGuardPlugin extends Plugin
 	};
 
 	@Provides
-	BankInventoryToggleGuardConfig provideConfig(ConfigManager configManager)
+	InterfaceHotkeyGuardConfig provideConfig(ConfigManager configManager)
 	{
-		return configManager.getConfig(BankInventoryToggleGuardConfig.class);
+		return configManager.getConfig(InterfaceHotkeyGuardConfig.class);
 	}
 
 	@Override
 	protected void startUp()
 	{
+		migrateConfiguration();
 		keyManager.registerKeyListener(inputListener);
 		clientThread.invokeLater(() ->
 		{
@@ -168,5 +180,22 @@ public class BankInventoryToggleGuardPlugin extends Plugin
 		return (config.protectBank() && bankOpen)
 			|| (config.protectCollectionLog() && collectionLogOpen)
 			|| (config.protectSettings() && settingsOpen);
+	}
+
+	private void migrateConfiguration()
+	{
+		for (String key : CONFIG_KEYS)
+		{
+			if (configManager.getConfiguration(InterfaceHotkeyGuardConfig.CONFIG_GROUP, key) != null)
+			{
+				continue;
+			}
+
+			String oldValue = configManager.getConfiguration(LEGACY_CONFIG_GROUP, key);
+			if (oldValue != null)
+			{
+				configManager.setConfiguration(InterfaceHotkeyGuardConfig.CONFIG_GROUP, key, oldValue);
+			}
+		}
 	}
 }

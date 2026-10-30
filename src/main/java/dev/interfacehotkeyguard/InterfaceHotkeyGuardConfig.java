@@ -1,13 +1,15 @@
-package dev.bankinventorytoggleguard;
+package dev.interfacehotkeyguard;
 
 import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
 import net.runelite.client.config.ConfigSection;
 
-@ConfigGroup("bankinventorytoggleguard")
-public interface BankInventoryToggleGuardConfig extends Config
+@ConfigGroup(InterfaceHotkeyGuardConfig.CONFIG_GROUP)
+public interface InterfaceHotkeyGuardConfig extends Config
 {
+	String CONFIG_GROUP = "interfacehotkeyguard";
+
 	@ConfigSection(
 		name = "Interfaces",
 		description = "Choose which interfaces protect against F-key shortcuts.",

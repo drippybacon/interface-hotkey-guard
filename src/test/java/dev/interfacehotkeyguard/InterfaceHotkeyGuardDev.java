@@ -1,17 +1,17 @@
-package dev.bankinventorytoggleguard;
+package dev.interfacehotkeyguard;
 
 import net.runelite.client.RuneLite;
 import net.runelite.client.externalplugins.ExternalPluginManager;
 
-public final class BankInventoryToggleGuardDev
+public final class InterfaceHotkeyGuardDev
 {
-	private BankInventoryToggleGuardDev()
+	private InterfaceHotkeyGuardDev()
 	{
 	}
 
 	public static void main(String[] args) throws Exception
 	{
-		ExternalPluginManager.loadBuiltin(BankInventoryToggleGuardPlugin.class);
+		ExternalPluginManager.loadBuiltin(InterfaceHotkeyGuardPlugin.class);
 		RuneLite.main(args);
 	}
 }
